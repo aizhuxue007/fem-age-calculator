@@ -162,7 +162,7 @@ input:focus {
     }
 
     .divider-circle {
-        background-color: var(--off-black);
+        background-color: var(--purple);
     }
 
     #btn:hover {

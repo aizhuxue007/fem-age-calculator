@@ -118,6 +118,15 @@ svg {
     color: var(--light-red);
 }
 
+#btn:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+input:focus {
+    border: 1px solid var(--purple);
+}
+
 @media screen and (max-width: 463px) {
     .inputs {
         flex-direction: column;
@@ -154,5 +163,10 @@ svg {
 
     .divider-circle {
         background-color: var(--off-black);
+    }
+
+    #btn:hover {
+        background-color: var(--purple);
+        opacity: 0.75;
     }
 }

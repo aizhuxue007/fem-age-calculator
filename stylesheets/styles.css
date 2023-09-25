@@ -54,16 +54,11 @@ input {
     margin-top: 0.5em;
 }
 
-.inputs label {
+label {
     color: var(--smokey-grey);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.3rem;
-}
-
-/* not work */
-input:placeholder {
-    color: var(--off-black)
 }
 
 .divider {
@@ -108,6 +103,19 @@ svg {
 
 .output-quantity {
     color: var(--purple);
+}
+
+.input--warn-txt {
+    color: var(--light-red);
+    margin: 1em 0;
+}
+
+.input--warn-border {
+    border: 1px solid var(--light-red);
+}
+
+.main-error-display {
+    color: var(--light-red);
 }
 
 @media screen and (max-width: 463px) {

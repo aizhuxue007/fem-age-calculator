@@ -116,20 +116,23 @@ function renderError(txt) {
     mainError.innerText = txt;
 }
 
-function checkDateError(date) {
-    if ( Object.prototype.toString.call(date) === "[object Date]" ) {
-        if ( !isNaN(date.getTime()) ) {
-         renderError('Date is valid.');
-         return false;
-           // date is valid
-        } else {
-           renderError('Date is not valid.')
-           return true;
-        }
-     } else {
-        renderError('Date is not valid.')
-        return true;
-     }
+function checkDateError(date_str) {
+    const dateFormat = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
+  if (!dateFormat.test(date_str)) {
+    return false;
+  }
+
+  const [, year, month, day] = date_str.match(dateFormat).map(Number);
+  const maxMonth = 12;
+  const maxDay = 31;
+
+  if (month < 1 || month > maxMonth || day < 1 || day > maxDay || year < 0) {
+    return true;
+  }
+
+  // Additional validation logic can be added here if needed.
+
+  return false;
 }
 
 function validatedInputs() {
@@ -138,7 +141,8 @@ function validatedInputs() {
     let year = parseInt(yearInput.value);
     let today = new Date()
     let date = `${year}-${month}-${day}`;
-       
+    console.log(day, month, year, today, date)
+
     if ((!day) || (!month) || (!year) ) {
         renderEmptyFields()
         return false;

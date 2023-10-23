@@ -19,6 +19,8 @@ document.getElementById('btn').addEventListener('click', (e) => handleSubmit(e))
 function handleSubmit(e) {
     e.preventDefault();
     removeInputWarnings();
+    removeLabelWarnings();
+    removeErrors();
     let validated = validatedInputs()
 
     if (validated) {
@@ -60,6 +62,10 @@ function warnEffect() {
     warnLabel()
 }
 
+function removeErrors() {
+    errorYearOutput.innerText = '';
+}
+
 function warnInput() {
     let inpuTs = document.querySelectorAll('input')
     for (let i = 0; i < inpuTs.length; i++) {
@@ -84,7 +90,16 @@ function warnLabel() {
 
 function removeInputWarnings() {
     for (let i = 0; i < inputs.length; i++) {
-        inputs[i].classList.remove('input--warn')
+        inputs[i].classList.remove('input--warn-border')
+        inputs[i].classList.remove('input--warn-txt')
+      
+    }
+}
+function removeLabelWarnings() {
+    let labels = document.querySelectorAll('label')
+    console.log('in here')
+    for (let i = 0; i < inputs.length; i++) {
+        labels[i].classList.remove('input--warn-txt')
     }
 }
 
@@ -106,6 +121,11 @@ function renderMonthOutOfBounds() {
     warnEffect()
 }
 
+function renderYearOutOfBounds() {
+    errorYearOutput.innerText = 'Year out of bounds.'
+    warnEffect() 
+}
+
 function renderInTheFuture() {
     errorYearOutput.innerText = 'Please enter present or past year.'
     warnEffect()
@@ -116,31 +136,12 @@ function renderError(txt) {
     mainError.innerText = txt;
 }
 
-function checkDateError(date_str) {
-    const dateFormat = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
-  if (!dateFormat.test(date_str)) {
-    return false;
-  }
-
-  const [, year, month, day] = date_str.match(dateFormat).map(Number);
-  const maxMonth = 12;
-  const maxDay = 31;
-
-  if (month < 1 || month > maxMonth || day < 1 || day > maxDay || year < 0) {
-    return true;
-  }
-
-  // Additional validation logic can be added here if needed.
-
-  return false;
-}
-
 function validatedInputs() {
     let day = parseInt(dayInput.value);
     let month = parseInt(monthInput.value);
     let year = parseInt(yearInput.value);
     let today = new Date()
-    let date = `${year}-${month}-${day}`;
+    let date = `${month}-${day}-${year}`;
     console.log(day, month, year, today, date)
 
     if ((!day) || (!month) || (!year) ) {
@@ -159,8 +160,9 @@ function validatedInputs() {
         renderInTheFuture()
         return false;
     }
-    if (checkDateError(date)) {
-        return false
+    if (year < 0) {
+        renderYearOutOfBounds()
+        return false;
     }
     return true;
 }
